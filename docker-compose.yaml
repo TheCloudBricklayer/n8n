@@ -1,0 +1,27 @@
+services:
+  n8n-server:
+    build: ./docker/n8n-custom
+    hostname: n8n-server
+    ports:
+      - "5678:5678"
+    privileged: false
+    networks:
+      br-mgmt:
+        ipv4_address: 172.29.236.2
+      #br-intlan:
+      #  ipv4_address: 172.29.240.2
+    volumes:
+      - ~/n8n-data:/home/node/.n8n:rw
+networks:
+  br-mgmt:
+    driver: bridge1
+    ipam:
+      config:
+        - subnet: 172.29.236.0/22
+          gateway: 172.29.236.1
+  #br-intlan:
+  #  driver: bridge
+  #  ipam:
+  #    config:
+  #      - subnet: 172.29.240.0/22
+  #        gateway: 172.29.240.1
