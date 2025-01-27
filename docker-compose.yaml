@@ -1,6 +1,12 @@
 services:
   n8n-server:
-    build: ./docker/n8n-custom
+    build:
+      context: ./docker/images/n8n
+      dockerfile: Dockerfile
+      args:
+        NODE_VERSION: ${NODE_VERSION}
+        N8N_VERSION: ${N8N_VERSION}
+    image: n8n:latest
     hostname: n8n-server
     ports:
       - "5678:5678"
@@ -14,7 +20,7 @@ services:
       - ~/n8n-data:/home/node/.n8n:rw
 networks:
   br-mgmt:
-    driver: bridge1
+    driver: bridge
     ipam:
       config:
         - subnet: 172.29.236.0/22
